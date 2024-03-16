@@ -17,11 +17,6 @@ const LoginPage = () => {
       password: password,
     })
   }
-
-  // dsfgdsfgsdfg1@gmail.com
-  // 1234567890
-
-
   return (
     <Paper sx={{
       margin: 'auto',
