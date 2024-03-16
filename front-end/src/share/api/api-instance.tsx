@@ -7,7 +7,8 @@ class Chat {
         
     }
     sendMessage(text: string, idUser: number) {
-        const date = '12.03.2056'
+        const date = '';
+        
         axios.post(backendURL + "/message", {
             body: JSON.stringify({
                 text: text,
