@@ -1,0 +1,13 @@
+.card {
+    background: white;
+    border-radius: 2px;
+    padding: 5px 7px;
+    display: flex;
+    flex-direction: column;
+    &Name {
+        color: #065b61;
+    }
+    &Date {
+        color: #aaa;
+    }
+}
