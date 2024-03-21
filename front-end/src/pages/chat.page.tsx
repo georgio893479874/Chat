@@ -29,7 +29,6 @@ const ChatPage = () => {
 
   useEffect(() => {
     supabase.auth.getSession().then((data)=> {
-      console.log(data.data)
       if (!data.data.session) {
         setIsLogin(false);
       } else {
