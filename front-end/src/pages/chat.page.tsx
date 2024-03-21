@@ -1,9 +1,8 @@
-import { UiMessage } from "../share/ui/ui-message"
-import { useEffect, useState } from "react"
+import { UiMessage } from "../share/ui/ui-message";
+import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
-
 interface IMessage {
   text: string;
   date: string;
@@ -16,6 +15,7 @@ const supabase = createClient(url, key);
 const ChatPage = () => {
   let navigate = useNavigate()
   let [message, setMessage] = useState("");
+  let [login, setLogin] = useState("");
   let [messages, setMessages] = useState<IMessage[]>([]);
   let [isLogin, setIsLogin] = useState(true);
   let messagesComponents: JSX.Element[] = [];
@@ -26,16 +26,17 @@ const ChatPage = () => {
       navigate('/login')
     }
   }, [isLogin])
-  
+
   useEffect(() => {
     supabase.auth.getSession().then((data)=> {
       console.log(data.data)
       if (!data.data.session) {
         setIsLogin(false);
+      } else {
+        setLogin(data.data.session.user.user_metadata?.login)
       }
     })
   }, [])
-
 
   function sendMessage() {
     if (message.trim().length > 0) {
@@ -58,46 +59,38 @@ const ChatPage = () => {
   function createMessages() {
     for (let i = 0; i < messages.length; i++) {
       messagesComponents.push(
-        <UiMessage key={i} text={messages[i].text} date={messages[i].date}/>
+        <UiMessage name={login} key={i} text={messages[i].text} date={messages[i].date}/>
       );
     }
   }
 
- 
-
   createMessages();
-  console.log(isLogin, 'isLogin')
   if (isLogin) {
-    
- 
-  return (
-    <div className="">
-      <div className="main">
-        {messagesComponents}
+    return (
+      <div className="">
+        <div className="main">{messagesComponents}</div>
+        <Paper elevation={10}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+          position: "fixed",
+          bottom: "40px",
+          width: "80%",
+          left: "10%",
+          right: "10%",
+          padding: "16px",
+        }}>
+          <textarea onKeyUp={createWithEnter} className="textarea" style={{resize: "none", fontSize: "16px", width: "50%"}} onChange={(e) => {setMessage(e.target.value)}} value={message} name="textarea" id=""></textarea>
+          <Button variant="contained" onClick={sendMessage} className="send-button">Send message</Button>
+        </Paper>
       </div>
-      <Paper 
-      elevation={10}
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "20px",
-        position: "fixed",
-        bottom: "40px",
-        width: "80%",
-        left: "10%",
-        right: "10%",
-        padding: "16px",
-      }}>
-        <textarea onKeyUp={createWithEnter} className="textarea" style={{resize: "none", fontSize: "16px", width: "50%"}} onChange={(e) => {setMessage(e.target.value)}} value={message} name="textarea" id=""></textarea>
-        <Button variant="contained" onClick={sendMessage} className="send-button">Send message</Button>
-      </Paper>
-    </div>
-  )
-}
-else {
-  return 'check is login...'
-}
+    )
+  }
+  else {
+    return 'check is login...'
+  }
 }
 
-export default ChatPage
+export default ChatPage;
