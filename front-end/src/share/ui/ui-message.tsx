@@ -1,5 +1,5 @@
 import Avatar from "@mui/material/Avatar";
-import image from "../../assets/Avatar.png"
+import image from "../../assets/Avatar.png";
 import Typography from "@mui/material/Typography";
 import { Paper } from "@mui/material";
 interface UiMessageProps {
