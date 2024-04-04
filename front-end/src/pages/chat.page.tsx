@@ -32,7 +32,10 @@ const ChatPage = () => {
       if (!data.data.session) {
         setIsLogin(false);
       } else {
-        setLogin(data.data.session.user.user_metadata?.login)
+        setLogin(data.data.session.user.user_metadata?.login);
+        supabase.from("Messages").select('*' ).then(data=>{
+          console.log(data)
+        })
       }
     })
   }, [])
@@ -44,6 +47,17 @@ const ChatPage = () => {
           text: message,
           date: date,
       }];
+      console.log()
+
+      supabase.from('Messages').insert([{
+        author: login,
+        content: message,
+
+      }]).then((data) => {
+
+        console.log(data)
+      })
+    
       setMessages(resMessages);
       setMessage("");
     }
