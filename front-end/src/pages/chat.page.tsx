@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
+
 interface IMessage {
   text: string;
   date: string;
