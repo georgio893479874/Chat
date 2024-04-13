@@ -81,7 +81,7 @@ const ChatPage = () => {
   if (isLogin) {
     return (
       <div className="">
-        <div className="main" id="chat-container>{messagesComponents}</div>
+        <div className="main">{messagesComponents}</div>
         <Paper elevation={10}
         sx={{
           display: "flex",
