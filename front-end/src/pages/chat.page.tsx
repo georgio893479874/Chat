@@ -22,13 +22,6 @@ const ChatPage = () => {
   let messagesComponents: JSX.Element[] = [];
 
   useEffect(() => {
-  let chatContainer = document.getElementById("chat-container");
-  if (chatContainer) {
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  }
-}, [messages]);
-
-  useEffect(() => {
     if (!isLogin) {
       navigate('/login');
     }
