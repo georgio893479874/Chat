@@ -23,8 +23,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     if (!isLogin) {
-
-      navigate('/login')
+      navigate('/login');
     }
   }, [isLogin])
 
@@ -32,10 +31,14 @@ const ChatPage = () => {
     supabase.auth.getSession().then((data)=> {
       if (!data.data.session) {
         setIsLogin(false);
-      } else {
+      } 
+      else {
         setLogin(data.data.session.user.user_metadata?.login);
-        supabase.from("Messages").select('*' ).then(data=>{
-          console.log(data)
+        supabase.from("Messages").select('*').limit(20).order("created_at", {ascending:false}).then(data=>{
+          console.log(data.data)
+          if (data.data) {
+            setMessages(data.data.reverse())
+          }
         })
       }
     })
@@ -48,14 +51,10 @@ const ChatPage = () => {
           text: message,
           date: date,
       }];
-      console.log()
-
       supabase.from('Messages').insert([{
         author: login,
-        content: message,
-
+        text: message,
       }]).then((data) => {
-
         console.log(data)
       })
     
