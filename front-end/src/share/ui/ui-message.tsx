@@ -12,7 +12,7 @@ const UiMessage = (props: UiMessageProps) => {
     return(
         <Paper elevation={4} className="message-wrapper">
             <Avatar className="avatar" alt="Remy Sharp" src={image}/>
-            <Typography>{props.name}</Typography>
+            <Typography sx={{fontSize: "10px"}}>{props.name}</Typography>
             <Typography className="message-content" variant="caption" component="p">{props.text}</Typography>
             <Typography className="message-date" variant="caption" component="h4">{props.date}</Typography>
         </Paper>
