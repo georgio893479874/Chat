@@ -41,7 +41,6 @@ body {
 .main {
     width: 90%;
     overflow-y: auto;
-    overflow-x: hidden;
     position: fixed;
     left: 10%;
     flex-direction: column;
@@ -60,3 +59,4 @@ body {
 .main::-webkit-scrollbar-track {
     background-color: #f1f1f1;
 }
+
