@@ -46,8 +46,6 @@ const ChatPage = () => {
   }, [])
 
   function sendMessage() {
-    let date: string;
-
     if (message.trim().length > 0) {
       supabase.from('Messages').insert([{
         author: login,
@@ -67,6 +65,7 @@ const ChatPage = () => {
       setMessage("");
       })    
     }
+    
   }
 
   function createWithEnter(event: { keyCode: number; }) {
