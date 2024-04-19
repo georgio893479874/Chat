@@ -6,7 +6,8 @@ import { createClient } from "@supabase/supabase-js";
 
 interface IMessage {
   text: string;
-  date: string;
+  created_at: string;
+  author: string;
 }
 
 let key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN0Y2Rkb3FybmZteWZpZW5wcGljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk4MzM2MDIsImV4cCI6MjAyNTQwOTYwMn0.o4rnb00r_igMaBWXuV1V1FmWekva49nKLrwhndN3y2c';
@@ -35,9 +36,9 @@ const ChatPage = () => {
       else {
         setLogin(data.data.session.user.user_metadata?.login);
         supabase.from("Messages").select('*').limit(20).order("created_at", {ascending:false}).then(data=>{
-          console.log(data.data)
+          console.log(data.data);
           if (data.data) {
-            setMessages(data.data.reverse())
+            setMessages(data.data.reverse());
           }
         })
       }
@@ -45,21 +46,26 @@ const ChatPage = () => {
   }, [])
 
   function sendMessage() {
+    let date: string;
+
     if (message.trim().length > 0) {
-      let date = (new Date().getDate()).toString() + '.' + (new Date().getHours()).toString() + ':' + (new Date().getMinutes()).toString();
-      let resMessages = [...messages, {
-          text: message,
-          date: date,
-      }];
       supabase.from('Messages').insert([{
         author: login,
         text: message,
-      }]).then((data) => {
-        console.log(data)
-      })
-    
+      }]).select("*").then((data) => {
+        if (!data.data) return;
+
+        let date = data.data[0].created_at
+        let author = data.data[0].author
+        console.log(data.data[0].created_at)
+        let resMessages = [...messages, {
+          text: message,
+          created_at: date,
+          author: author,
+      }];
       setMessages(resMessages);
       setMessage("");
+      })    
     }
   }
 
@@ -71,8 +77,12 @@ const ChatPage = () => {
 
   function createMessages() {
     for (let i = 0; i < messages.length; i++) {
+      let isMy = false;
+      if (login == messages[i].author) {
+        isMy = true;
+      }
       messagesComponents.push(
-        <UiMessage name={login} key={i} text={messages[i].text} date={messages[i].date}/>
+        <UiMessage isMy={isMy} name={messages[i].author} key={i} text={messages[i].text} date={messages[i].created_at}/>
       );
     }
   }
