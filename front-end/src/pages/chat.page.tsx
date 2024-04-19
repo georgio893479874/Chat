@@ -55,14 +55,14 @@ const ChatPage = () => {
 
         let date = data.data[0].created_at
         let author = data.data[0].author
-        console.log(data.data[0].created_at)
         let resMessages = [...messages, {
           text: message,
           created_at: date,
           author: author,
-      }];
-      setMessages(resMessages);
-      setMessage("");
+        }];
+        
+        setMessages(resMessages);
+        setMessage("");
       })    
     }
     
