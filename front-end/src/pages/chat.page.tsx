@@ -40,9 +40,6 @@ const ChatPage = () => {
 
 
   useEffect(() => {
-  const channels = supabase.channel('custom-all-channel')
-  .on('postgres_changes', { event: '*', schema: 'public', table: 'Messages' }, getMessages).subscribe()
-
    function getMessages() {
     supabase.auth.getSession().then((data)=> {
       if (!data.data.session) {
