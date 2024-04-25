@@ -33,7 +33,7 @@ body {
 .message-content {
     word-wrap: break-word;
     overflow-wrap: break-word;
-    width: 78%;
+    width: 80%;
     text-align: left;
     padding-left: 15px;
 }

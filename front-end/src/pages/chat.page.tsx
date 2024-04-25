@@ -1,5 +1,5 @@
 import { UiMessage } from "../share/ui/ui-message";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
@@ -15,6 +15,7 @@ let url = 'https://stcddoqrnfmyfienppic.supabase.co';
 const supabase = createClient(url, key);
 
 const ChatPage = () => {
+  let div = useRef(null)
   let navigate = useNavigate()
   let [message, setMessage] = useState("");
   let [login, setLogin] = useState("");
@@ -23,12 +24,26 @@ const ChatPage = () => {
   let messagesComponents: JSX.Element[] = [];
 
   useEffect(() => {
+    if (div.current) {
+      console.log('div')
+      // @ts-ignore
+      div.current.scrollTo(0, 999999999)
+    }
+    
+  }, [messages])
+
+  useEffect(() => {
     if (!isLogin) {
       navigate('/login');
     }
   }, [isLogin])
 
+
   useEffect(() => {
+  const channels = supabase.channel('custom-all-channel')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'Messages' }, getMessages).subscribe()
+
+   function getMessages() {
     supabase.auth.getSession().then((data)=> {
       if (!data.data.session) {
         setIsLogin(false);
@@ -43,6 +58,8 @@ const ChatPage = () => {
         })
       }
     })
+   }
+  getMessages()
   }, [])
 
   function sendMessage() {
@@ -90,7 +107,7 @@ const ChatPage = () => {
   if (isLogin) {
     return (
       <div className="">
-        <div className="main">{messagesComponents}</div>
+        <div ref={div} className="main">{messagesComponents}</div>
         <Paper elevation={10}
         sx={{
           display: "flex",

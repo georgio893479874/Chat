@@ -8,15 +8,13 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import UserPage from './pages/user.page';
 
-
-
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<ChatPage/>} />
         <Route path='/login' element={<LoginPage/>} />
-        <Route path='/' element={<UserPage/>}/>
+        <Route path='/user' element={<UserPage/>}/>
       </Routes>
     </BrowserRouter>
   )

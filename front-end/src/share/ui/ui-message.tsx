@@ -11,11 +11,28 @@ interface UiMessageProps {
 
 const UiMessage = (props: UiMessageProps) => {
     let date = new Date(props.date)
+
+    //@ts-ignore
+    function linkifyText(text) {
+        const urlRegex = /(\bhttps?:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+        const parts = text.split(urlRegex);
+        
+        //@ts-ignore
+        return parts.map((part, index) => {
+            if (part.match(urlRegex)) {
+                return <a key={index} href={part} target="_blank" rel="noopener noreferrer">{part}</a>;
+            } 
+            else {
+                return part;
+            }
+        });
+    }
+    
     return(
         <Paper elevation={4} className={props.isMy ? "message-wrapper isMy": "message-wrapper"}>
             <Avatar className="avatar" alt="Remy Sharp" src={image}/>
             <Typography sx={{fontSize: "10px"}}>{props.name}</Typography>
-            <Typography className="message-content" variant="caption" component="p">{props.text}</Typography>
+            <Typography className="message-content" variant="caption" component="p">{linkifyText(props.text)}</Typography>
             <Typography className="message-date" variant="caption" component="h4">{date.getHours()}:{date.getMinutes().toString().length == 1 ? '0' + date.getMinutes(): date.getMinutes() }</Typography>
         </Paper>
     );
