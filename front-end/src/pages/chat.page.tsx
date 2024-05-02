@@ -38,7 +38,6 @@ const ChatPage = () => {
     }
   }, [isLogin])
 
-
   useEffect(() => {
    function getMessages() {
     supabase.auth.getSession().then((data)=> {

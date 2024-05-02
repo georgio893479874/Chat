@@ -1,6 +1,6 @@
 const UiSearch = () => {
   return (
-    <input placeholder="search" type="text" />
+    <input placeholder="search" type="text"/>
   )
 }
 

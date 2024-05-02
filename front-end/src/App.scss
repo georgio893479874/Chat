@@ -1,21 +1,9 @@
+@import url("https://fonts.googleapis.com/css?family=Manrope:300,400,500,600,700&display=swap&subset=latin-ext");
+
 #root {
     max-width: 1280px;
     margin: 0 auto;
     padding: 2rem;
-    text-align: center;
-}
-
-.message-wrapper {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    background: #FFF;
-    padding: 10px 10px;
-    padding-bottom: 30px;
-    border-radius: 7px;
-    color: #000;
-    margin: 10px;
-    max-width: 350px;
 }
 
 body {
@@ -24,18 +12,29 @@ body {
     background: linear-gradient(to right, #B06AB3, #4568DC);    
 }
 
-.message-date {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
-
-.message-content {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    width: 80%;
-    text-align: left;
-    padding-left: 15px;
+.message {
+    margin-left: 0;
+    margin-right: 12px;
+    align-items: flex-end;
+    max-width: 350px;
+    padding: 10px 10px;
+    margin: 10px;
+    &-content {
+        color: #000;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    &-date {
+        text-align: right;
+    }
+    &-avatar {
+        float: left;
+        margin-right: 20px;
+    }
+    &-name {
+        font-family: Manrope;
+        color: #273346;
+    }
 }
 
 .main {
@@ -65,3 +64,4 @@ body {
     margin-left: auto;
     margin-right: 130px;
 }
+

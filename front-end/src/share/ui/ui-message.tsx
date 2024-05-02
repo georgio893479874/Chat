@@ -29,14 +29,13 @@ const UiMessage = (props: UiMessageProps) => {
     }
     
     return(
-        <Paper elevation={4} className={props.isMy ? "message-wrapper isMy": "message-wrapper"}>
-            <Avatar className="avatar" alt="Remy Sharp" src={image}/>
-            <Typography sx={{fontSize: "10px"}}>{props.name}</Typography>
+        <Paper elevation={4} className={props.isMy ? "message isMy": "message"}>
+            <Avatar className="message-avatar" alt="Remy Sharp" src={image}/>
+            <Typography sx={{fontSize: "13px"}} className="message-name">{props.name}</Typography>
             <Typography className="message-content" variant="caption" component="p">{linkifyText(props.text)}</Typography>
             <Typography className="message-date" variant="caption" component="h4">{date.getHours()}:{date.getMinutes().toString().length == 1 ? '0' + date.getMinutes(): date.getMinutes() }</Typography>
         </Paper>
     );
 }
-
 
 export { UiMessage };
