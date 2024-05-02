@@ -1,7 +1,7 @@
 import { UiMessage } from "../share/ui/ui-message";
 import { useEffect, useState, useRef } from "react";
 import { Button, Paper } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createClient } from "@supabase/supabase-js";
 
 interface IMessage {
@@ -103,6 +103,7 @@ const ChatPage = () => {
   if (isLogin) {
     return (
       <div className="">
+        <Link className="profile-link" to={"/profile"}>Перейти до кабінету</Link>
         <div ref={div} className="main">{messagesComponents}</div>
         <Paper elevation={10}
         sx={{
