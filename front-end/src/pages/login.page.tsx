@@ -1,11 +1,7 @@
 import { Button, Paper, Stack, TextField } from "@mui/material";
-import { createClient } from '@supabase/supabase-js';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-let key = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN0Y2Rkb3FybmZteWZpZW5wcGljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDk4MzM2MDIsImV4cCI6MjAyNTQwOTYwMn0.o4rnb00r_igMaBWXuV1V1FmWekva49nKLrwhndN3y2c';
-let url = 'https://stcddoqrnfmyfienppic.supabase.co';
-const supabase = createClient(url, key);
+import { supabase } from '../supabaseClient'
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -33,9 +29,9 @@ const LoginPage = () => {
     navigate("/");
   }
 
-  function signUp(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  async function signUp(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
-    supabase.auth.signUp({
+     supabase.auth.signUp({
       email: email,
       options: {
         data: {
@@ -43,8 +39,14 @@ const LoginPage = () => {
         }
       },
       password: password,
-    }).then((data) => {
+    }).then(async(data) => {
       if (!data.error) {
+        let id = data.data.user?.id;
+         if (id) {
+          console.log(id)
+           let a = await supabase.from('Users').insert([{user_id: id, avatar_url: '' }]).select()
+           console.log(a)
+         }
         redirectToMainPage();
       } 
       else {

@@ -89,4 +89,16 @@ body {
     font-size: 15px;
 }
 
+.paper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: fixed;
+    bottom: 40px;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+    padding: 16px;
+}
 
