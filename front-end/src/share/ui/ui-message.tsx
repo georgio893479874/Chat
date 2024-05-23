@@ -2,7 +2,7 @@ import Avatar from "@mui/material/Avatar";
 import image from "../../assets/Avatar.png";
 import Typography from "@mui/material/Typography";
 import { Paper } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface UiMessageProps {
     text: string,
@@ -12,7 +12,7 @@ interface UiMessageProps {
 }
 
 const UiMessage = (props: UiMessageProps) => {
-    const [avatar, setAvatar] = useState(null);
+    const avatar = useState(null);
     let date = new Date(props.date)
 
     //@ts-ignore
