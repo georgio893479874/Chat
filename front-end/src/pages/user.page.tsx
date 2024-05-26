@@ -12,26 +12,27 @@ const UserPage = () => {
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-   
     (async() => {
-      let user = await supabase.auth.getUser()
-      setUser(user)
+      let user = await supabase.auth.getUser();
+
+      setUser(user);
       setLogin(user.data.user?.user_metadata.login);
-      setEmail(user.data.user?.email  || 'email not found')
+      setEmail(user.data.user?.email  || 'email not found');
     })()
   }, [])
 
   async function sendPhoto() {
     if (ref.current && ref.current?.files) {
       let file = ref.current?.files[0];
+      
       if (!user) return;
       let id = user.data.user?.id;
       let url = supabase.storage.from('bucket2').getPublicUrl(`${id}-logo${file.name.slice(file.name.lastIndexOf('.'))}`).data.publicUrl;
       let a = await supabase.from('Users').update({ avatar_url: url }).eq('user_id', id).select();
 
       await supabase.storage.from('bucket2').upload(`${id}-logo${file.name.slice(file.name.lastIndexOf('.'))}`, file, {upsert: true});
-      console.log(url)   
-      console.log(a)
+      console.log(url); 
+      console.log(a);
     }
   }
   

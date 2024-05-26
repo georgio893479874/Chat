@@ -2,7 +2,7 @@ import { UiMessage } from "../share/ui/ui-message";
 import { useEffect, useState, useRef } from "react";
 import { Button, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { supabase } from '../supabaseClient'
+import { supabase } from '../supabaseClient';
 
 interface IMessage {
   text: string;

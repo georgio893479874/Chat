@@ -13,7 +13,7 @@ interface UiMessageProps {
 
 const UiMessage = (props: UiMessageProps) => {
     const avatar = useState(null);
-    let date = new Date(props.date)
+    let date = new Date(props.date);
 
     //@ts-ignore
     function linkifyText(text) {
