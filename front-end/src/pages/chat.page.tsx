@@ -103,7 +103,7 @@ const ChatPage = () => {
         <Link className="profile-link" to={"/profile"}>Перейти до кабінету</Link>
         <div ref={div} className="main">{messagesComponents}</div>
         <Paper className="paper" elevation={10}>
-          <textarea onKeyUp={createWithEnter} className="textarea" style={{resize: "none", fontSize: "16px", width: "50%"}} onChange={(e) => {setMessage(e.target.value)}} value={message} name="textarea" id=""></textarea>
+          <textarea onKeyUp={createWithEnter} className="textarea" onChange={(e) => {setMessage(e.target.value)}} value={message} name="textarea" id=""></textarea>
           <Button variant="contained" onClick={sendMessage} className="send-button">Send message</Button>
         </Paper>
       </div>
