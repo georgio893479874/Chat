@@ -23,7 +23,7 @@ const UserPage = () => {
       let ava = data.data[0].avatar_url
       
       
-      console.log('ava111', data.data[0].avatar_url)
+      console.log('ava111: ', data.data[0].avatar_url)
       // console.log(user.data.user?.user_metadata.avatar_url)
       setAvatar(ava)
       setUser(user);
@@ -40,14 +40,19 @@ const UserPage = () => {
       console.log('sending photo')
       let id = user.data.user?.id;
 
+
+      let random = Math.random()*10000000
+
       let fileName = `${id}-logo${file.name.slice(file.name.lastIndexOf('.'))}`
+      let newFileName = `${id}-${random}-logo${file.name.slice(file.name.lastIndexOf('.'))}`
 
       let removeAnswer = await supabase.storage.from('bucket2').remove([fileName])
       console.log('removeAnswer', removeAnswer)
 
-      await supabase.storage.from('bucket2').upload(fileName, file)
+
+      await supabase.storage.from('bucket2').upload(newFileName, file)
       .then(async () => {
-        let url = supabase.storage.from('bucket2').getPublicUrl(fileName).data.publicUrl;
+        let url = supabase.storage.from('bucket2').getPublicUrl(newFileName).data.publicUrl;
         console.log(id, url)
         
 
@@ -55,6 +60,7 @@ const UserPage = () => {
         if (!a.data) return;
 
         console.log(a.data[0].avatar_url)
+        setAvatar(a.data[0].avatar_url)
 
       })
       
