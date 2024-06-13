@@ -36,7 +36,6 @@ const UserPage = () => {
 
       let id = user.data.user?.id;
       let random = Math.random()*10000000;
-      let fileName = `${id}-logo${file.name.slice(file.name.lastIndexOf('.'))}`;
       let newFileName = `${id}-${random}-logo${file.name.slice(file.name.lastIndexOf('.'))}`;
 
       await supabase.storage.from('bucket2').upload(newFileName, file).then(async () => {
