@@ -38,7 +38,6 @@ const UserPage = () => {
       let random = Math.random()*10000000;
       let fileName = `${id}-logo${file.name.slice(file.name.lastIndexOf('.'))}`;
       let newFileName = `${id}-${random}-logo${file.name.slice(file.name.lastIndexOf('.'))}`;
-      let removeAnswer = await supabase.storage.from('bucket2').remove([fileName]);
 
       await supabase.storage.from('bucket2').upload(newFileName, file).then(async () => {
         let url = supabase.storage.from('bucket2').getPublicUrl(newFileName).data.publicUrl;
