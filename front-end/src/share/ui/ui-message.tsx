@@ -32,27 +32,21 @@ const UiMessage = (props: UiMessageProps) => {
         });
     }
 
+    useEffect(() => {
+        (async () => {
+            if (!props.isMy) return;
+            
+            let user = await supabase.auth.getUser();
+            let id = user.data.user?.id;
+            let data = await supabase.from('Users').select('avatar_url').eq('user_id', id);
+            
+            if (!data.data) return;
+          
+            let ava = data.data[0].avatar_url
     
-  useEffect(() => {
-    (async () => {
-        if (!props.isMy) return;
-        
-      let user = await supabase.auth.getUser();
-      let id = user.data.user?.id;
-
-    
-      let data = await supabase.from('Users').select('avatar_url').eq('user_id', id)
-      if (!data.data) return;
-      
-      let ava = data.data[0].avatar_url
-      
-      
-      console.log('ava111: ', data.data[0].avatar_url)
-      // console.log(user.data.user?.user_metadata.avatar_url)
-      setAvatar(ava)
-
-    })();
-  }, []);
+            setAvatar(ava);
+        })();
+    }, []);
     
     return(
         <Paper elevation={4} className={props.isMy ? "message isMy": "message"}>
