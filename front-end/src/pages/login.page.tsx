@@ -1,7 +1,7 @@
 import { Button, Paper, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from '../supabaseClient'
+import { supabase } from '../supabaseClient';
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -41,12 +41,6 @@ const LoginPage = () => {
       password: password,
     }).then(async(data) => {
       if (!data.error) {
-        let id = data.data.user?.id;
-         if (id) {
-          console.log(id)
-           let a = await supabase.from('Users').insert([{user_id: id, avatar_url: '' }]).select()
-           console.log(a)
-         }
         redirectToMainPage();
       } 
       else {

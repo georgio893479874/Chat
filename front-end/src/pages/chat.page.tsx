@@ -9,6 +9,7 @@ interface IMessage {
   created_at: string;
   author: string;
   ava: string;
+  authorId: string;
 }
 
 const ChatPage = () => {
@@ -22,8 +23,6 @@ const ChatPage = () => {
 
   useEffect(() => {
     if (div.current) {
-      console.log("div");
-
       // @ts-ignore
       div.current.scrollTo(0, 999999999);
     }
@@ -63,7 +62,6 @@ const ChatPage = () => {
                   };
                 })
               );
-
               if (readyMessages) {
                 setMessages(readyMessages.reverse());
               }
@@ -79,7 +77,7 @@ const ChatPage = () => {
       let user = await supabase.auth.getUser();
       let id = user.data.user?.id;
 
-      supabase.from("Messages").insert([
+      await supabase.from("Messages").insert([
           {
             author: login,
             text: message,
@@ -90,6 +88,7 @@ const ChatPage = () => {
 
           let date = data.data[0].created_at;
           let author = data.data[0].author;
+          
           const newMessage =  {
             text: message,
             created_at: date,
@@ -122,26 +121,26 @@ const ChatPage = () => {
         isMy = true;
       }
       messagesComponents.push(
-        <UiMessage isMy={isMy} name={messages[i].author} key={i} text={messages[i].text} date={messages[i].created_at}/>
+        <UiMessage isMy={isMy} name={messages[i].author} key={i} text={messages[i].text} date={messages[i].created_at} ava={messages[i].ava}/>
       );
     }
   }
 
   createMessages();
+
   if (isLogin) {
     return (
       <div className="">
         <Link className="profile-link" to={"/profile"}>Перейти до кабінету</Link>
-        <div ref={div} className="main">
-          {messagesComponents}
-        </div>
+        <div ref={div} className="main">{messagesComponents}</div>
         <Paper className="paper" elevation={10}>
-          <textarea onKeyUp={createWithEnter} className="textarea" onChange={(e) => { setMessage(e.target.value) }} value={message} name="textarea"></textarea>
+          <textarea onKeyUp={createWithEnter} className="textarea" onChange={(e) => {setMessage(e.target.value)}} value={message} name="textarea"></textarea>
           <Button variant="contained" onClick={sendMessage} className="send-button">Send message</Button>
         </Paper>
       </div>
     );
-  } else {
+  } 
+  else {
     return "check is login...";
   }
 };
